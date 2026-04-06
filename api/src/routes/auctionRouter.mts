@@ -1,3 +1,4 @@
+import express from "express";
 
 // GET - all auctions
 
@@ -7,6 +8,6 @@
 
 // PUT - update auction when someone places a bid
 
-// DELETE - delete auction after auction has endedimport express from "express";
+// DELETE - delete auction after auction has ended
 
 export const auctionRouter = express.Router();

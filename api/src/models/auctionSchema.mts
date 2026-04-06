@@ -1,8 +1,12 @@
-import { model, Schema, type InferSchemaType } from "mongoose";
+import {
+  model,
+  Schema,
+  type HydratedDocument,
+  type InferSchemaType,
+} from "mongoose";
 import type { AuctionDTO } from "./auctionDto.mjs";
 
 const auctionSchema = new Schema({
-  id: { type: Number, required: true },
   imageUrl: { type: String, required: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
@@ -15,9 +19,11 @@ const AuctionModel = model("auction", auctionSchema);
 
 type AuctionDbType = InferSchemaType<typeof auctionSchema>;
 
-export const convertToDto = (dataFromDb: AuctionDbType): AuctionDTO => {
+type AuctionDocument = HydratedDocument<AuctionDbType>;
+
+export const convertToDto = (dataFromDb: AuctionDocument): AuctionDTO => {
   return {
-    id: dataFromDb.id,
+    id: dataFromDb._id.toString(),
     imageUrl: dataFromDb.imageUrl,
     title: dataFromDb.title,
     description: dataFromDb.description,

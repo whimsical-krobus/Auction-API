@@ -1,4 +1,5 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, type InferSchemaType } from "mongoose";
+import type { AuctionDTO } from "./auctionDto.mjs";
 
 const auctionSchema = new Schema({
   id: { type: Number, required: true },
@@ -11,3 +12,19 @@ const auctionSchema = new Schema({
 });
 
 const AuctionModel = model("auction", auctionSchema);
+
+type AuctionDbType = InferSchemaType<typeof auctionSchema>;
+
+export const convertToDto = (dataFromDb: AuctionDbType): AuctionDTO => {
+  return {
+    id: dataFromDb.id,
+    imageUrl: dataFromDb.imageUrl,
+    title: dataFromDb.title,
+    description: dataFromDb.description,
+    endTime: dataFromDb.endTime,
+    startingPrice: dataFromDb.startingPrice,
+    currentPrice: dataFromDb.currentPrice,
+  } satisfies AuctionDTO;
+};
+
+export default AuctionModel;

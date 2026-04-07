@@ -1,4 +1,5 @@
 import express from "express";
+//import { AuctionDTO } from "../models/auctionDto.mjs";
 
 export const auctionRouter = express.Router();
 
@@ -27,6 +28,8 @@ auctionRouter.get("/:title", (req, res) => {
 });
 
 // POST - create auction with item, starting price, end time, and seller id
+
+
 
 // PUT - update auction when someone places a bid
 

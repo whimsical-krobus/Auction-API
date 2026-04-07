@@ -55,3 +55,12 @@ auctionRouter.post("/", async (req, res) => {
 // PUT - update auction when someone places a bid
 
 // DELETE - delete auction after auction has ended
+auctionRouter.delete("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        res.status(200).json({ message: `Auction with ID ${id} deleted` });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error });
+    }
+});

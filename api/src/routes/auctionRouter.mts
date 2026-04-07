@@ -14,7 +14,15 @@ auctionRouter.get("/", (_, res) => {
 });
 
 // GET id - auction if exists
-
+auctionRouter.get("/:id", (req, res) => {
+    try {
+        const { id } = req.params;
+        res.status(200).json({ message: `Auction with ID ${id}` });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error});
+   }
+});
 
 // GET title - auction if exists
 auctionRouter.get("/:title", (req, res) => {
@@ -28,7 +36,6 @@ auctionRouter.get("/:title", (req, res) => {
 });
 
 // POST - create auction with item, starting price, end time, and seller id
-
 
 
 // PUT - update auction when someone places a bid

@@ -41,7 +41,7 @@ auctionRouter.post("/", async (req, res) => {
         const { imageUrl, title, description, endTime, startingPrice, currentPrice, createdBy } = req.body;
 
         if ( imageUrl && title && description && endTime && startingPrice && currentPrice && createdBy ) {
-            const newAuction = await createAuction(imageUrl, title, description, endTime, startingPrice, currentPrice, createdBy);
+            //const newAuction = await createAuction(imageUrl, title, description, endTime, startingPrice, currentPrice, createdBy);
             res.status(201).json({ message: "Auction created" });
         } else {
             res.status(400).json({ message: "Missing required fields" });
@@ -53,6 +53,32 @@ auctionRouter.post("/", async (req, res) => {
 });
 
 // PUT - update auction when someone places a bid
+/*
+auctionRouter.put("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { currentPrice } = req.body;
+
+        if ( currentPrice ) {
+            const updatedAuction = await newBid.findByIdAndUpdate(id, {
+                currentPrice
+            }, { new: true });
+
+            if (!updatedAuction) {
+                return res.status(404).json({ message: "Auction not found" });
+            }
+
+            res.status(200).json({ message: "Auction updated" });
+        } else {
+            res.status(400).json({ message: "Missing required fields" });
+        }
+    } catch (error) {
+        console.error(error);
+        } else {
+            res.status(400).json({ message: "Missing required fields" });
+        }
+});
+*/
 
 // DELETE - delete auction after auction has ended
 auctionRouter.delete("/:id", async (req, res) => {

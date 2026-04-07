@@ -1,5 +1,5 @@
 export type AuctionDTO = {
-  id: number;
+  id: string;
   imageUrl: string;
   title: string;
   description: string;

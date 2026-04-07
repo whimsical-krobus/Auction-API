@@ -11,7 +11,7 @@ const User = model("user", userSchema);
 
 type UserDbType = InferSchemaType<typeof userSchema>;
 
-export const convertToDto = (dataFromDb: UserDbType): UserDTO => {
+export const convertUserToDto = (dataFromDb: UserDbType): UserDTO => {
   return {
     username: dataFromDb.username,
     email: dataFromDb.email,

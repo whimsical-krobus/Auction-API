@@ -21,7 +21,9 @@ type AuctionDbType = InferSchemaType<typeof auctionSchema>;
 
 type AuctionDocument = HydratedDocument<AuctionDbType>;
 
-export const convertToDto = (dataFromDb: AuctionDocument): AuctionDTO => {
+export const convertAuctionToDto = (
+  dataFromDb: AuctionDocument,
+): AuctionDTO => {
   return {
     id: dataFromDb._id.toString(),
     imageUrl: dataFromDb.imageUrl,

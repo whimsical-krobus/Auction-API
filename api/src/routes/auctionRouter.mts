@@ -1,10 +1,10 @@
 import express from "express";
-//import { AuctionDTO } from "../models/auctionDto.mjs";
+import type { AuctionDTO } from "../models/auctionDto.mjs";
 
 export const auctionRouter = express.Router();
 
 // GET - all auctions
-auctionRouter.get("/", (_, res) => {
+auctionRouter.get("/", async (_, res) => {
     try {
         res.status(200).json({ message: "All auctions" });
     } catch (error) {
@@ -14,7 +14,7 @@ auctionRouter.get("/", (_, res) => {
 });
 
 // GET id - auction if exists
-auctionRouter.get("/:id", (req, res) => {
+auctionRouter.get("/:id", async (req, res) => {
     try {
         const { id } = req.params;
         res.status(200).json({ message: `Auction with ID ${id}` });
@@ -25,7 +25,7 @@ auctionRouter.get("/:id", (req, res) => {
 });
 
 // GET title - auction if exists
-auctionRouter.get("/:title", (req, res) => {
+auctionRouter.get("/:title", async (req, res) => {
     try {
         const { title } = req.params;
         res.status(200).json({ message: `Auction with title ${title}` });
@@ -35,8 +35,22 @@ auctionRouter.get("/:title", (req, res) => {
     }
 });
 
-// POST - create auction with item, starting price, end time, and seller id
+// POST - create auction with item, starting price, end time, and sellers user name
+auctionRouter.post("/", async (req, res) => {
+    try {
+        const { title, description, endTime, startingPrice } = req.body;
 
+        if ( title && description && endTime && startingPrice) {
+            const newAuction = await createAuction(title, description, endTime, startingPrice);
+            res.status(201).json({ message: "Auction created" });
+        } else {
+            res.status(400).json({ message: "Missing required fields" });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error });
+    }
+});
 
 // PUT - update auction when someone places a bid
 

@@ -6,4 +6,5 @@ export type AuctionDTO = {
   endTime: Date;
   startingPrice: number;
   currentPrice: number;
+  createdBy: string;
 };

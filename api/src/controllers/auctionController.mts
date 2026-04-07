@@ -1,21 +1,21 @@
 import AuctionModel, { convertAuctionToDto } from "../models/auctionSchema.mjs";
 
-export const createAuction = async (req, res) => {
-  try {
-    const auction = new AuctionModel({
-      imageUrl: req.body.imageUrl,
-      title: req.body.title,
-      description: req.body.description,
-      endTime: req.body.endTime,
-      startingPrice: req.body.startingPrice,
-      currentPrice: req.body.startingPrice,
-      createdBy: req.user.email,
-    });
-
-    await auction.save();
-
-    res.status(200).json(convertAuctionToDto(auction));
-  } catch (error) {
-    res.status(500).json(error);
-  }
-};ß
+export const createAuction = async (
+  imageUrl: string,
+  title: string,
+  description: string,
+  endTime: Date,
+  startingPrice: number,
+  currentPrice: number,
+  createdBy: string,
+) => {
+  return await AuctionModel.create({
+    imageUrl,
+    title,
+    description,
+    endTime,
+    startingPrice,
+    currentPrice,
+    createdBy
+  });
+}

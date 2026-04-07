@@ -1,5 +1,5 @@
 import express from "express";
-import type { AuctionDTO } from "../models/auctionDto.mjs";
+import { createAuction } from "../controllers/auctionController.mjs";
 
 export const auctionRouter = express.Router();
 
@@ -38,10 +38,10 @@ auctionRouter.get("/:title", async (req, res) => {
 // POST - create auction with item, starting price, end time, and sellers user name
 auctionRouter.post("/", async (req, res) => {
     try {
-        const { title, description, endTime, startingPrice } = req.body;
+        const { imageUrl, title, description, endTime, startingPrice, currentPrice, createdBy } = req.body;
 
-        if ( title && description && endTime && startingPrice) {
-            const newAuction = await createAuction(title, description, endTime, startingPrice);
+        if ( imageUrl && title && description && endTime && startingPrice && currentPrice && createdBy ) {
+            const newAuction = await createAuction(imageUrl, title, description, endTime, startingPrice, currentPrice, createdBy);
             res.status(201).json({ message: "Auction created" });
         } else {
             res.status(400).json({ message: "Missing required fields" });

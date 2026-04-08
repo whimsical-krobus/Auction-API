@@ -1,4 +1,4 @@
-import AuctionModel, { convertAuctionToDto } from "../models/auctionSchema.mjs";
+import AuctionModel from "../models/auctionSchema.mjs";
 
 export const createAuction = async (
   imageUrl: string,

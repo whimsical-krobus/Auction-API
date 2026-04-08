@@ -1,4 +1,3 @@
-import type { Auction } from "../models/auction.mjs";
 import AuctionModel, { convertAuctionToDto } from "../models/auctionSchema.mjs";
 
 export const createAuction = async (

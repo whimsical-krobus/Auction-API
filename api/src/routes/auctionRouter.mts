@@ -1,5 +1,5 @@
 import express from "express";
-import { createAuction } from "../controllers/auctionController.mjs";
+import { newAuctionBid  } from "../controllers/auctionController.mjs";
 
 export const auctionRouter = express.Router();
 
@@ -56,11 +56,11 @@ auctionRouter.post("/", async (req, res) => {
 auctionRouter.put("/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        const { currentPrice } = req.body;
-
-        const updatedAuction = await newAuctionBid.findByIdAndUpdate(id, {
-                currentPrice
-            }, { new: true });
+        const { bid } = req.body;
+        if (!bid || typeof bid !== "number") {
+        return res.status(400).json({ message: "Ogiltigt bud" });
+        }
+        const updatedAuction = await newAuctionBid(id, bid);
 
         if (!updatedAuction) {
             return res.status(404).json({ message: "Auction not found" });

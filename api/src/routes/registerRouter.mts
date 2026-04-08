@@ -8,8 +8,8 @@ registerRouter.post("/", async (req, res) => {
     try {
         const { username, email, password }: RegisterRequest = req.body;
         
-        if (!username) {
-            return res.status(400).json({ message: "Username is required" });
+        if (!(username && email && password)) {
+            return res.status(400).json({ message: "All fields are required" });
         }
         
     

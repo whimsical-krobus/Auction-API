@@ -3,12 +3,6 @@ import type { RegisterRequest } from "../models/requests/registerRequest.mjs";
 
 export const registerRouter = express.Router();
 
-// GET
-
-
-// GET id?
-
-
 // POST
 registerRouter.post("/", async (req, res) => {
     try {
@@ -24,8 +18,3 @@ registerRouter.post("/", async (req, res) => {
         res.status(500).json({ message: error });
     }
 });
-
-// PUT
-
-
-// DELETE

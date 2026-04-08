@@ -1,3 +1,4 @@
+import type { Auction } from "../models/auction.mjs";
 import AuctionModel, { convertAuctionToDto } from "../models/auctionSchema.mjs";
 
 export const createAuction = async (
@@ -16,6 +17,31 @@ export const createAuction = async (
     endTime,
     startingPrice,
     currentPrice,
-    createdBy
+    createdBy,
   });
-}
+};
+
+export const getAuctions = async () => {
+  return await AuctionModel.find();
+};
+
+export const getAuction = async (id: string) => {
+  return await AuctionModel.findOne({ id: +id });
+};
+
+export const newAuctionBid = async (auctionId: string, newBid: number) => {
+  return await AuctionModel.findOneAndUpdate(
+    {
+      _id: auctionId,
+      currentPrice: { $lt: newBid },
+    },
+    {
+      $set: { currentPrice: newBid },
+    },
+    { new: true },
+  );
+};
+
+export const deleteAuction = async (id: string) => {
+  return await AuctionModel.findOneAndDelete({ id: +id });
+};

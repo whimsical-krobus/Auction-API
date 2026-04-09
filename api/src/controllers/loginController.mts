@@ -6,7 +6,7 @@ export const loginUser = async (request: LoginRequest) => {
   const foundUser = await User.findOne({ email: request.email });
 
   if (!foundUser) {
-    throw Error("Could not find user with email);
+    throw Error("Could not find user with email");
   }
 
   const success = await bcrypt.compare(request.password, foundUser.password);

@@ -28,18 +28,18 @@ export const getOneAuction = async (id: string) => {
   return await AuctionModel.findOne({ id: +id });
 };
 
-export const newAuctionBid = async (auctionId: string, newBid: number) => {
-  return await AuctionModel.findOneAndUpdate(
-    {
-      _id: auctionId,
-      currentPrice: { $lt: newBid },
-    },
-    {
-      $set: { currentPrice: newBid },
-    },
-    { new: true },
-  );
-};
+//export const newAuctionBid = async (auctionId: string, newBid: number) => {
+//   return await AuctionModel.findOneAndUpdate(
+//     {
+//       _id: auctionId,
+//       currentPrice: { $lt: newBid },
+//     },
+//     {
+//       $set: { currentPrice: newBid },
+//     },
+//     { new: true },
+//   );
+// };
 
 export const deleteAuction = async (id: string) => {
   return await AuctionModel.findOneAndDelete({ id: +id });

@@ -2,7 +2,7 @@ import express from "express";
 import {
   getAllAuctions,
   getOneAuction,
-  newAuctionBid,
+  //newAuctionBid,
 } from "../controllers/auctionController.mjs";
 import { createAuction } from "../controllers/auctionController.mjs";
 
@@ -27,7 +27,7 @@ auctionRouter.get("/:id", async (req, res) => {
     if (!auction) {
       res.status(404).json({ message: `Auction with ID ${id} not found` });
     } else {
-      res.status(200).json({ message: `Auction with ID ${id}` });
+      res.status(200).json(auction);
     }
   } catch (error) {
     console.error(error);

@@ -20,11 +20,11 @@ export const createAuction = async (
   });
 };
 
-export const getAuctions = async () => {
+export const getAllAuctions = async () => {
   return await AuctionModel.find();
 };
 
-export const getAuction = async (id: string) => {
+export const getOneAuction = async (id: string) => {
   return await AuctionModel.findOne({ id: +id });
 };
 

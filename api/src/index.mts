@@ -9,6 +9,7 @@ import cookieParser from "cookie-parser";
 import { registerRouter } from "./routes/registerRouter.mjs"
 import { loginRouter } from "./routes/loginRouter.mjs"
 import { auctionRouter } from "./routes/auctionRouter.mjs"
+import { auth } from "./middleware/auth.mjs";
 
 config();
 
@@ -37,7 +38,7 @@ app.use(json());
 
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
-app.use("/auctions", auctionRouter);
+app.use("/auctions", auth, auctionRouter);
 
 
 app.get("/ping", (_, res) => {

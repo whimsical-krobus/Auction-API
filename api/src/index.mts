@@ -55,9 +55,10 @@ const io = new Server(server, {
   },
 });
 
-
-io.on("connection", (socket) => {
+// Server-side Socket.IO logic for handling real-time communication
+io.on("connection", async (socket) => {
   console.log("User connected:", socket.id);
+
 });
 
 

@@ -2,7 +2,6 @@ import express from "express";
 import type { LoginRequest } from "../models/requests/loginRequest.mjs";
 import { loginUser } from "../controllers/loginController.mjs";
 import jwt from "jsonwebtoken";
-import type { UserDto } from "../models/userDto.mjs";
 
 export const loginRouter = express.Router();
 
@@ -16,14 +15,16 @@ loginRouter.post("/", async (req, res) => {
     const userDto = await loginUser({ email, password });
 
     if (userDto) {
-      const token = jwt.sign(userDto, process.env.JWT_SECRET || "supersecretsecret");
+      const token = jwt.sign(userDto, process.env.JWT_SECRET || "banankontakt");
 
       const expires = new Date();
       expires.setHours(expires.getHours() + 1);
 
       res.cookie("login", token, {
         expires,
-        httpOnly: false,
+        sameSite: "none",
+        secure: true,
+        httpOnly: true,
       });
 
       return res.status(200).json(userDto);

@@ -14,7 +14,7 @@ const auctionSchema = new Schema({
   startingPrice: { type: Number, required: true },
   currentPrice: { type: Number, required: true },
   createdBy: { type: String, required: true },
-  leadingBidder: { type: String, required: false }
+  leadingBidder: { type: String, required: true },
 });
 
 const AuctionModel = model("auction", auctionSchema);
@@ -35,6 +35,7 @@ export const convertAuctionToDto = (
     startingPrice: dataFromDb.startingPrice,
     currentPrice: dataFromDb.currentPrice,
     createdBy: dataFromDb.createdBy,
+    leadingBidder: dataFromDb.leadingBidder,
   } satisfies AuctionDTO;
 };
 

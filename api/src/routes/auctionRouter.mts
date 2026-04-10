@@ -57,6 +57,7 @@ auctionRouter.post("/", async (req, res) => {
       startingPrice,
       currentPrice,
       createdBy,
+      leadingBidder,
     } = req.body;
 
     if (
@@ -66,7 +67,8 @@ auctionRouter.post("/", async (req, res) => {
       endTime &&
       startingPrice &&
       currentPrice &&
-      createdBy
+      createdBy &&
+      leadingBidder
     ) {
       const newAuction = await createAuction(
         imageUrl,
@@ -76,6 +78,7 @@ auctionRouter.post("/", async (req, res) => {
         startingPrice,
         currentPrice,
         createdBy,
+        leadingBidder,
       );
       res.status(201).json(newAuction);
     } else {

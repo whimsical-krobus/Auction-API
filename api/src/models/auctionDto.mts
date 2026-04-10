@@ -7,4 +7,5 @@ export type AuctionDTO = {
   startingPrice: number;
   currentPrice: number;
   createdBy: string;
+  leadingBidder: string;
 };

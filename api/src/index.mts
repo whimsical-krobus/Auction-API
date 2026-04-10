@@ -61,15 +61,21 @@ io.on("connection", async (socket) => {
   const loginCookie = cookies.login;
   console.log("Login cookie:", loginCookie);
 
-  if (loginCookie) {
-    console.log("Cookie:", loginCookie);
+  socket.on("joinAuction", async (auctionId: string) => {
+  
+    if (!loginCookie) {
+      socket.emit("bidError", "Du behöver logga in!");
+      return;
+    }
 
-    const auctions = await AuctionModel.find();
+    socket.join(auctionId);
+  
+    const foundAuction = await AuctionModel.findById(auctionId);
 
-    const auctionRooms = auctions.map((auction) => auction.title);
-
-    socket.emit("auctionRooms", auctionRooms);
-  }
+    if (foundAuction) {
+      socket.emit("auctionInfo", foundAuction);
+    }
+  });
 });
 
 server.listen(port, async () => {

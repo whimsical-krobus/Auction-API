@@ -115,6 +115,7 @@ io.on("connection", async (socket) => {
 
     io.to(auctionId).emit("auctionInfo", foundAuction);
   });
+});
 
 server.listen(port, async () => {
   try {

@@ -5,7 +5,8 @@ import cors from "cors";
 import { config } from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-
+import type { UserDTO } from "./models/userDto.mjs";
+import jwt from "jsonwebtoken";
 import { registerRouter } from "./routes/registerRouter.mjs";
 import { loginRouter } from "./routes/loginRouter.mjs";
 import { auctionRouter } from "./routes/auctionRouter.mjs";
@@ -81,6 +82,20 @@ io.on("connection", async (socket) => {
     if (!loginCookie) {
       socket.emit("bidError", "Du behöver logga in!");
       return;
+    }
+
+    const foundAuction = await AuctionModel.findById(auctionId);
+    if (foundAuction && loginCookie) {
+
+      const userDto = jwt.decode(loginCookie) as UserDTO | null;
+
+      if (foundAuction.endTime < new Date()) {
+        io.to(auctionId).emit("auctionInfo", foundAuction);
+        socket.emit("bidError", "Auktionen är avslutad!");
+        return;
+      }
+     
+      
     }
 });
 

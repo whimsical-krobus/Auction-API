@@ -101,8 +101,14 @@ io.on("connection", async (socket) => {
         return;
       } 
     }
+
+    if (bidAmount <= foundAuction.currentPrice) {
+      socket.emit("bidError", "Din bud får inte vara lägre än det nuvarande högsta budet!");
+      return;
+    }
+
     
-});
+  });
 
 server.listen(port, async () => {
   try {

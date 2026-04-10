@@ -2,7 +2,7 @@ import express from "express";
 import {
   getAllAuctions,
   getOneAuction,
-  newAuctionBid,
+  // newAuctionBid,
 } from "../controllers/auctionController.mjs";
 import { createAuction } from "../controllers/auctionController.mjs";
 

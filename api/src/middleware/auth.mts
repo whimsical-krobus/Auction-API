@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import type { NextFunction, Request, Response } from "express";
-import type { UserDto } from "../models/userDto.mjs";
+import type { UserDTO } from "../models/userDto.mjs";
 import User from "../models/userSchema.mjs";
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
@@ -16,7 +16,7 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
         res.status(401).json({ message: "You are not logged in" });
       } else {
         const foundUser = await User.findOne({
-          email: (user as UserDto).email,
+          email: (user as UserDTO).email,
         });
 
         if (foundUser) {
@@ -28,6 +28,6 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(401).json( { message: "You are not logged in" });
+    res.status(401).json({ message: "You are not logged in" });
   }
 };

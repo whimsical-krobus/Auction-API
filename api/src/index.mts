@@ -76,6 +76,12 @@ io.on("connection", async (socket) => {
       socket.emit("auctionInfo", foundAuction);
     }
   });
+
+  socket.on("placeBid", async (auctionId: string, bidAmount: number) => {
+    if (!loginCookie) {
+      socket.emit("bidError", "Du behöver logga in!");
+      return;
+    }
 });
 
 server.listen(port, async () => {

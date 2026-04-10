@@ -108,9 +108,11 @@ io.on("connection", async (socket) => {
 
       foundAuction.currentPrice = bidAmount;
       foundAuction.leadingBidder = userDto.username;
+
       await foundAuction.save();
     } else {
         socket.emit("bidError", "Auktionen kunde inte hittas!");
+        return;
       }
 
     io.to(auctionId).emit("auctionInfo", foundAuction);
@@ -124,7 +126,7 @@ server.listen(port, async () => {
   } catch (error) {
     console.error("Database error:", error);
   }
-
   console.log("Server running on port:", port);
 });
+
 console.log("MongoURL:", mongoUrl);

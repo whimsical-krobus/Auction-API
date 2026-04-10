@@ -27,7 +27,7 @@ export const getAllAuctions = async () => {
 };
 
 export const getOneAuction = async (id: string) => {
-  return await AuctionModel.findOne({ id: +id });
+  return await AuctionModel.findById(id);
 };
 
 //export const newAuctionBid = async (auctionId: string, newBid: number) => {

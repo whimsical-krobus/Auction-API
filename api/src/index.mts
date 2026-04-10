@@ -85,9 +85,9 @@ io.on("connection", async (socket) => {
     }
 
     const foundAuction = await AuctionModel.findById(auctionId);
-    if (foundAuction && loginCookie) {
 
-      const userDto = jwt.decode(loginCookie) as UserDTO | null;
+    if (foundAuction && loginCookie) {
+      const userDto = jwt.decode(loginCookie) as UserDTO;
 
       if (foundAuction.endTime < new Date()) {
         io.to(auctionId).emit("auctionInfo", foundAuction);
@@ -95,8 +95,13 @@ io.on("connection", async (socket) => {
         return;
       }
      
-      
+      if (foundAuction.createdBy === userDto.username) {
+        io.to(auctionId).emit("auctionInfo", foundAuction);
+        socket.emit("bidError", "Du kan inte bjuda på din egen auktion!");
+        return;
+      } 
     }
+    
 });
 
 server.listen(port, async () => {

@@ -100,14 +100,20 @@ io.on("connection", async (socket) => {
         socket.emit("bidError", "Du kan inte bjuda på din egen auktion!");
         return;
       } 
-    }
 
-    if (bidAmount <= foundAuction.currentPrice) {
-      socket.emit("bidError", "Din bud får inte vara lägre än det nuvarande högsta budet!");
-      return;
-    }
+      if (bidAmount <= foundAuction.currentPrice) {
+        socket.emit("bidError", "Din bud får inte vara lägre än det nuvarande högsta budet!");
+        return;
+      }
 
-    
+      foundAuction.currentPrice = bidAmount;
+      foundAuction.leadingBidder = userDto.username;
+      await foundAuction.save();
+    } else {
+        socket.emit("bidError", "Auktionen kunde inte hittas!");
+      }
+
+    io.to(auctionId).emit("auctionInfo", foundAuction);
   });
 
 server.listen(port, async () => {

@@ -6,10 +6,12 @@ import { config } from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 
-import { registerRouter } from "./routes/registerRouter.mjs"
-import { loginRouter } from "./routes/loginRouter.mjs"
-import { auctionRouter } from "./routes/auctionRouter.mjs"
+import { registerRouter } from "./routes/registerRouter.mjs";
+import { loginRouter } from "./routes/loginRouter.mjs";
+import { auctionRouter } from "./routes/auctionRouter.mjs";
 import { auth } from "./middleware/auth.mjs";
+import cookie from "cookie";
+import AuctionModel from "./models/auctionSchema.mjs";
 
 config();
 
@@ -22,9 +24,7 @@ if (!mongoUrl) {
 
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-];
+const allowedOrigins = ["http://localhost:5173"];
 
 app.use(
   cors({
@@ -40,11 +40,9 @@ app.use("/register", registerRouter);
 app.use("/login", loginRouter);
 app.use("/auctions", auth, auctionRouter);
 
-
 app.get("/ping", (_, res) => {
   res.status(200).json({ message: "Alive" });
 });
-
 
 const server = createServer(app);
 
@@ -55,12 +53,24 @@ const io = new Server(server, {
   },
 });
 
-// Server-side Socket.IO logic for handling real-time communication
 io.on("connection", async (socket) => {
   console.log("User connected:", socket.id);
 
-});
+  const cookies = cookie.parse(socket.handshake.headers.cookie || "");
 
+  const loginCookie = cookies.login;
+  console.log("Login cookie:", loginCookie);
+
+  if (loginCookie) {
+    console.log("Cookie:", loginCookie);
+
+    const auctions = await AuctionModel.find();
+
+    const auctionRooms = auctions.map((auction) => auction.title);
+
+    socket.emit("auctionRooms", auctionRooms);
+  }
+});
 
 server.listen(port, async () => {
   try {

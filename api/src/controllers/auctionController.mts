@@ -6,7 +6,6 @@ export const createAuction = async (
   description: string,
   endTime: Date,
   startingPrice: number,
-  currentPrice: number,
   createdBy: string,
 ) => {
   return await AuctionModel.create({
@@ -15,8 +14,9 @@ export const createAuction = async (
     description,
     endTime,
     startingPrice,
-    currentPrice,
+    currentPrice: startingPrice,
     createdBy,
+    leadingBidder: "",
   });
 };
 

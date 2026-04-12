@@ -45,14 +45,22 @@ if (endTimeInput) {
   endTimeInput.value = date.toISOString().slice(0, 16);
 }
 
-document.getElementById("createAuctionForm")?.addEventListener("submit", async (e) => {
+document
+  .getElementById("createAuctionForm")
+  ?.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const title = (document.getElementById("title") as HTMLInputElement).value;
-    const description = (document.getElementById("description") as HTMLInputElement).value;
-    const imageUrl = (document.getElementById("imageUrl") as HTMLInputElement).value;
-    const startingPrice = +(document.getElementById("startingPrice") as HTMLInputElement).value;
-    const endTime = (document.getElementById("endTime") as HTMLInputElement).value;
+    const description = (
+      document.getElementById("description") as HTMLInputElement
+    ).value;
+    const imageUrl = (document.getElementById("imageUrl") as HTMLInputElement)
+      .value;
+    const startingPrice = +(
+      document.getElementById("startingPrice") as HTMLInputElement
+    ).value;
+    const endTime = (document.getElementById("endTime") as HTMLInputElement)
+      .value;
 
     const response = await fetch("http://localhost:3000/auctions", {
       method: "POST",
@@ -101,7 +109,7 @@ document.getElementById("bidForm")?.addEventListener("submit", (e) => {
 });
 
 socket.on("connect", () => {
-    socket.on("auctionInfo", (auction: Auction) => {
+  socket.on("auctionInfo", (auction: Auction) => {
     showAuction(auction);
   });
 
@@ -130,8 +138,7 @@ const loadAuctions = async () => {
     auctionList.innerHTML = "";
 
     auctions.forEach((auction) => {
-      
-       const button = document.createElement("button");
+      const button = document.createElement("button");
       button.textContent = auction.title;
 
       button.addEventListener("click", () => {

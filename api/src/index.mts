@@ -78,7 +78,7 @@ io.on("connection", async (socket) => {
     }
   });
 
-  socket.on("placeBid", async (auctionId: string, bidAmount: number) => {
+  socket.on("placeBid", async (bidAmount: number, auctionId: string) => {
     if (!loginCookie) {
       socket.emit("bidError", "Du behöver logga in!");
       return;

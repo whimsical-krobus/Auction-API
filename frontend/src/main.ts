@@ -1,1 +1,165 @@
 import "./style.css";
+import { io } from "socket.io-client";
+
+type Auction = {
+  _id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  startingPrice: number;
+  currentPrice: number;
+  endTime: string;
+  createdBy: string;
+  leadingBidder: string;
+};
+
+const socket = io("http://localhost:3000", {
+  withCredentials: true,
+});
+
+let selectedAuction = "";
+
+const auctionMessage = document.getElementById("auctionMessage");
+const currentUser = document.getElementById("currentUser");
+
+const me = sessionStorage.getItem("me");
+
+if (!me) {
+  location.href = "/login.html";
+}
+
+if (currentUser && me) {
+  currentUser.textContent = `Inloggad som: ${me}`;
+}
+const endTimeInput = document.getElementById(
+  "endTime",
+) as HTMLInputElement | null;
+
+const ONE_MINUTE_IN_MS = 60 * 1000;
+const ONE_HOUR_IN_MS = 60 * ONE_MINUTE_IN_MS;
+
+if (endTimeInput) {
+  const date = new Date(Date.now() + ONE_HOUR_IN_MS);
+  date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+
+  endTimeInput.value = date.toISOString().slice(0, 16);
+}
+
+document.getElementById("createAuctionForm")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const title = (document.getElementById("title") as HTMLInputElement).value;
+    const description = (document.getElementById("description") as HTMLInputElement).value;
+    const imageUrl = (document.getElementById("imageUrl") as HTMLInputElement).value;
+    const startingPrice = +(document.getElementById("startingPrice") as HTMLInputElement).value;
+    const endTime = (document.getElementById("endTime") as HTMLInputElement).value;
+
+    const response = await fetch("http://localhost:3000/auctions", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        title,
+        description,
+        imageUrl,
+        startingPrice,
+        endTime,
+      }),
+    });
+
+    if (response.status === 200) {
+      if (auctionMessage) {
+        auctionMessage.textContent = "Auktionen skapades!";
+        auctionMessage.className = "success";
+      }
+      await loadAuctions();
+    }
+  });
+
+document.getElementById("bidForm")?.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const amount = +(document.getElementById("amount") as HTMLInputElement).value;
+  const bidError = document.getElementById("bidError");
+
+  if (!selectedAuction) {
+    if (bidError) {
+      bidError.textContent = "Välj en auktion först";
+    }
+    return;
+  }
+
+  if (amount <= 0) {
+    if (bidError) {
+      bidError.textContent = "Budet måste vara högre än 0";
+    }
+    return;
+  }
+  socket.emit("placeBid", amount, selectedAuction);
+});
+
+socket.on("connect", () => {
+    socket.on("auctionInfo", (auction: Auction) => {
+    showAuction(auction);
+  });
+
+  socket.on("bidError", (message: string) => {
+    const bidError = document.getElementById("bidError");
+
+    if (bidError) {
+      bidError.textContent = message;
+    }
+  });
+});
+
+const loadAuctions = async () => {
+  const response = await fetch("http://localhost:3000/auctions", {
+    credentials: "include",
+  });
+
+  if (response.status === 200) {
+    const auctions: Auction[] = await response.json();
+    const auctionList = document.getElementById("auctionList");
+
+    if (!auctionList) {
+      return;
+    }
+
+    auctionList.innerHTML = "";
+
+    auctions.forEach((auction) => {
+      
+       const button = document.createElement("button");
+      button.textContent = auction.title;
+
+      button.addEventListener("click", () => {
+        selectedAuction = auction._id;
+        socket.emit("joinAuction", auction._id);
+      });
+
+      auctionList.appendChild(button);
+    });
+  }
+};
+
+const showAuction = (auction: Auction) => {
+  const auctionInfo = document.getElementById("auctionInfo");
+
+  if (!auctionInfo) {
+    return;
+  }
+
+  auctionInfo.innerHTML = `
+    <h2>${auction.title}</h2>
+    <img src="${auction.imageUrl}" alt="${auction.title}" width="250" />
+    <p>${auction.description}</p>
+    <p>Säljare: ${auction.createdBy}</p>
+    <p>Nuvarande bud: ${auction.currentPrice}</p>
+    <p>${new Date(auction.endTime) < new Date() ? "Vinnare" : "Ledande budgivare"}: ${auction.leadingBidder || "Ingen ännu"}</p>
+    <p>Slutar: ${new Date(auction.endTime).toLocaleString()}</p>
+    <p>Status: ${new Date(auction.endTime) < new Date() ? "Avslutad" : "Pågår"}</p> `;
+};
+
+loadAuctions();

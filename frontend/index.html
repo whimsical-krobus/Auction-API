@@ -4,10 +4,38 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
+    <title>Auction</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <nav>
+        <span id="currentUser"></span>
+      </nav>
+
+      <h1>Auktion</h1>
+
+      <form id="createAuctionForm">
+        <input type="text" id="title" placeholder="Titel" required/>
+        <input type="text" id="description" placeholder="Beskrivning" required/>
+        <input type="text" id="imageUrl" placeholder="Bildlänk" required/>
+        <input type="number" id="startingPrice" placeholder="Startpris" min="1" step="1" required/>
+        <input type="datetime-local" id="endTime" required/>
+        <button type="submit">Skapa auktion</button>
+      </form>
+
+      <p id="auctionMessage"></p>
+
+      <div id="auctionList"></div>
+
+      <div id="auctionInfo"></div>
+
+      <form id="bidForm">
+        <input type="number" id="amount" placeholder="Bud" />
+        <button>Lägg bud</button>
+      </form>
+
+      <p id="bidError"></p>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

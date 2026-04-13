@@ -50,14 +50,6 @@ auctionRouter.post("/", async (req, res) => {
 
     const { imageUrl, title, description, endTime, startingPrice } = req.body;
 
-    console.log("FIELDS:", {
-      imageUrl,
-      title,
-      description,
-      endTime,
-      startingPrice,
-    });
-
     if (
       typeof imageUrl === "string" &&
       typeof title === "string" &&

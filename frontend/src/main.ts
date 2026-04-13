@@ -45,9 +45,7 @@ if (endTimeInput) {
   endTimeInput.value = date.toISOString().slice(0, 16);
 }
 
-document
-  .getElementById("createAuctionForm")
-  ?.addEventListener("submit", async (e) => {
+document.getElementById("createAuctionForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const title = (document.getElementById("title") as HTMLInputElement).value;
@@ -169,4 +167,4 @@ const showAuction = (auction: Auction) => {
     <p>Status: ${new Date(auction.endTime) < new Date() ? "Avslutad" : "Pågår"}</p> `;
 };
 
-loadAuctions();
+void loadAuctions();

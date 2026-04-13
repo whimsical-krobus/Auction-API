@@ -7,7 +7,7 @@ document.querySelector("#loginForm")?.addEventListener("submit", async (e) => {
     const password = (document.querySelector("#password") as HTMLInputElement).value;
     const message = document.querySelector("#message") as HTMLDivElement;
 
-    const response = await fetch("http://localhost:3000login", {
+    const response = await fetch("http://localhost:3000/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

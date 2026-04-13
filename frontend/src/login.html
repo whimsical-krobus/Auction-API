@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <div id="app">
+        <h1>Login</h1>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="E-post" required />
+            <input type="password" id="password" placeholder="Lösenord" required />
+            <button type="submit">Logga in</button>
+        </form>
+        <p id="message"></p>
+        <p>Har du inget konto? <a href="/register.html">Registrera dig</a></p>
+    </div>
+    <script type="module" src="/frontend/src/login.ts"></script>
+</body>
+</html>

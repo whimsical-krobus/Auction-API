@@ -77,7 +77,7 @@ document
       }),
     });
 
-    if (response.status === 200 || response.status === 201) {
+    if (response.status === 201) {
       if (auctionMessage) {
         auctionMessage.textContent = "Auktionen skapades!";
         auctionMessage.className = "success";

@@ -2,7 +2,7 @@ import "./style.css";
 import { io } from "socket.io-client";
 
 type Auction = {
-  _id: string;
+  id: string;
   title: string;
   description: string;
   imageUrl: string;
@@ -45,7 +45,9 @@ if (endTimeInput) {
   endTimeInput.value = date.toISOString().slice(0, 16);
 }
 
-document.getElementById("createAuctionForm")?.addEventListener("submit", async (e) => {
+document
+  .getElementById("createAuctionForm")
+  ?.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const title = (document.getElementById("title") as HTMLInputElement).value;
@@ -75,12 +77,34 @@ document.getElementById("createAuctionForm")?.addEventListener("submit", async (
       }),
     });
 
-    if (response.status === 200) {
+    if (response.status === 200 || response.status === 201) {
       if (auctionMessage) {
         auctionMessage.textContent = "Auktionen skapades!";
         auctionMessage.className = "success";
       }
+
+      (document.getElementById("title") as HTMLInputElement).value = "";
+      (document.getElementById("description") as HTMLInputElement).value = "";
+      (document.getElementById("imageUrl") as HTMLInputElement).value = "";
+      (document.getElementById("startingPrice") as HTMLInputElement).value = "";
+
+      const endTimeInput = document.getElementById(
+        "endTime",
+      ) as HTMLInputElement;
+      const date = new Date(Date.now() + ONE_HOUR_IN_MS);
+      date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+      endTimeInput.value = date.toISOString().slice(0, 16);
+
       await loadAuctions();
+    } else if (response.status === 400) {
+      if (auctionMessage) {
+        auctionMessage.textContent = "Kunde inte skapa auktionen. Fält saknas.";
+        auctionMessage.className = "error";
+      }
+    } else if (auctionMessage) {
+      auctionMessage.textContent =
+        "Något gick fel när auktionen skulle skapas.";
+      auctionMessage.className = "error";
     }
   });
 
@@ -140,8 +164,8 @@ const loadAuctions = async () => {
       button.textContent = auction.title;
 
       button.addEventListener("click", () => {
-        selectedAuction = auction._id;
-        socket.emit("joinAuction", auction._id);
+        selectedAuction = auction.id;
+        socket.emit("joinAuction", auction.id);
       });
 
       auctionList.appendChild(button);
@@ -167,4 +191,4 @@ const showAuction = (auction: Auction) => {
     <p>Status: ${new Date(auction.endTime) < new Date() ? "Avslutad" : "Pågår"}</p> `;
 };
 
-void loadAuctions();
+loadAuctions();

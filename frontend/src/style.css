@@ -69,6 +69,13 @@ button {
   gap: 0.5rem;
   justify-content: center;
   margin-bottom: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#auctionList button {
+  min-width: 80px;
 }
 
 #auctionInfo img {

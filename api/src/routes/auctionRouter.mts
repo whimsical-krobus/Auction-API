@@ -2,8 +2,9 @@ import express from "express";
 import {
   getAllAuctions,
   getOneAuction,
+  createAuction,
 } from "../controllers/auctionController.mjs";
-import { createAuction } from "../controllers/auctionController.mjs";
+import jwt from "jsonwebtoken";
 
 export const auctionRouter = express.Router();
 
@@ -21,11 +22,12 @@ auctionRouter.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const auction = await getOneAuction(id);
+
     if (!auction) {
-      res.status(404).json({ message: `Auction with ID ${id} not found` });
-    } else {
-      res.status(200).json(auction);
+      return res.status(404).json({ message: `Auction with ID ${id} not found` });
     }
+
+    res.status(200).json(auction);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error });
@@ -34,16 +36,34 @@ auctionRouter.get("/:id", async (req, res) => {
 
 auctionRouter.post("/", async (req, res) => {
   try {
-    const { imageUrl, title, description, endTime, startingPrice, createdBy } =
-      req.body;
+   
+    const loginCookie = req.cookies.login;
+    
+    if (!loginCookie) {
+      return res.status(401).json({ message: "You are not logged in" });
+    }
+
+    const user = jwt.verify(
+      loginCookie,
+      process.env.JWT_SECRET || "banankontakt",
+    ) as { username: string; email: string };
+
+    const { imageUrl, title, description, endTime, startingPrice } = req.body;
+
+    console.log("FIELDS:", {
+      imageUrl,
+      title,
+      description,
+      endTime,
+      startingPrice,
+    });
 
     if (
       typeof imageUrl === "string" &&
       typeof title === "string" &&
       typeof description === "string" &&
       endTime &&
-      typeof startingPrice === "number" &&
-      typeof createdBy === "string"
+      typeof startingPrice === "number"
     ) {
       const newAuction = await createAuction(
         imageUrl,
@@ -51,14 +71,14 @@ auctionRouter.post("/", async (req, res) => {
         description,
         endTime,
         startingPrice,
-        createdBy,
+        user.username,
       );
-      res.status(201).json(newAuction);
+
+      return res.status(201).json(newAuction);
     } else {
-      res.status(400).json({ message: "Missing required fields" });
+      return res.status(400).json({ message: "Missing required fields" });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: error });
+       return res.status(500).json({ message: "Internal server error" });
   }
 });

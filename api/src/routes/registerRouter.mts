@@ -6,7 +6,6 @@ import { createUser } from "../controllers/registerController.mjs";
 
 export const registerRouter = express.Router();
 
-// POST
 registerRouter.post("/", async (req, res) => {
     try {
         const { username, email, password }: RegisterRequest = req.body;

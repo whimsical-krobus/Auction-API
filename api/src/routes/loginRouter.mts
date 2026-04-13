@@ -36,24 +36,3 @@ loginRouter.post("/", async (req, res) => {
     res.status(500).json(JSON.stringify(error));
   }
 });
-
-// loginRouter.get("/me", (req, res) => {
-//   try {
-//     const token = req.cookies["login"];
-
-//     if (!token) {
-//       return res.status(401).send("You are not logged in");
-//     }
-
-//     const user = jwt.decode(token) as UserDto | null;
-
-//     if (!user) {
-//       return res.status(401).send("You are not logged in");
-//     }
-
-//     res.status(200).json(user);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(401).send("You are not logged in");
-//   }
-// });

@@ -14,7 +14,7 @@ const auctionSchema = new Schema({
   startingPrice: { type: Number, required: true },
   currentPrice: { type: Number, required: true },
   createdBy: { type: String, required: true },
-  leadingBidder: { type: String, required: true },
+  leadingBidder: { type: String, required: false },
 });
 
 const AuctionModel = model("auction", auctionSchema);

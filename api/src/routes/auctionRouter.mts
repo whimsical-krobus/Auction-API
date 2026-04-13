@@ -19,22 +19,6 @@ auctionRouter.get("/", async (_, res) => {
   }
 });
 
-auctionRouter.get("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const auction = await getOneAuction(id);
-
-    if (!auction) {
-      return res.status(404).json({ message: `Auction with ID ${id} not found` });
-    }
-
-    res.status(200).json(auction);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: error });
-  }
-});
-
 auctionRouter.post("/", async (req, res) => {
   try {
    
@@ -68,6 +52,7 @@ auctionRouter.post("/", async (req, res) => {
       );
 
       return res.status(201).json(newAuction);
+
     } else {
       return res.status(400).json({ message: "Missing required fields" });
     }
@@ -75,3 +60,19 @@ auctionRouter.post("/", async (req, res) => {
        return res.status(500).json({ message: "Internal server error" });
   }
 });
+
+// auctionRouter.get("/:id", async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const auction = await getOneAuction(id);
+
+//     if (!auction) {
+//       return res.status(404).json({ message: `Auction with ID ${id} not found` });
+//     }
+
+//     res.status(200).json(auction);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: error });
+//   }
+// });

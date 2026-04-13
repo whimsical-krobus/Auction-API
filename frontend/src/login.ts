@@ -14,4 +14,10 @@ document.querySelector("#loginForm")?.addEventListener("submit", async (e) => {
         credentials: "include",
         body: JSON.stringify({ email, password }),
     });
+
+    if (response.status === 200) {
+        const user = (await response.json()) as { username: string; email: string; };
+        sessionStorage.setItem("me", user.username);
+        location.href = "/";
+    }
 });

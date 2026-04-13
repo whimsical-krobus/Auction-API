@@ -13,6 +13,7 @@ import { auctionRouter } from "./routes/auctionRouter.mjs";
 import { auth } from "./middleware/auth.mjs";
 import cookie from "cookie";
 import AuctionModel from "./models/auctionSchema.mjs";
+import { convertAuctionToDto } from "./models/auctionSchema.mjs";
 
 config();
 
@@ -74,7 +75,7 @@ io.on("connection", async (socket) => {
     const foundAuction = await AuctionModel.findById(auctionId);
 
     if (foundAuction) {
-      socket.emit("auctionInfo", foundAuction);
+      socket.emit("auctionInfo", convertAuctionToDto(foundAuction));
     }
   });
 

@@ -5,7 +5,7 @@ import {
   createAuction,
 } from "../controllers/auctionController.mjs";
 import jwt from "jsonwebtoken";
-import { UserDTO } from "../models/userDto.mjs";
+import type { UserDTO } from "../models/userDto.mjs";
 
 export const auctionRouter = express.Router();
 

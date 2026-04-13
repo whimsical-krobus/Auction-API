@@ -5,6 +5,7 @@ import {
   createAuction,
 } from "../controllers/auctionController.mjs";
 import jwt from "jsonwebtoken";
+import { UserDTO } from "../models/userDto.mjs";
 
 export const auctionRouter = express.Router();
 
@@ -46,7 +47,7 @@ auctionRouter.post("/", async (req, res) => {
     const user = jwt.verify(
       loginCookie,
       process.env.JWT_SECRET || "banankontakt",
-    ) as { username: string; email: string };
+    ) as UserDTO;
 
     const { imageUrl, title, description, endTime, startingPrice } = req.body;
 

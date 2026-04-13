@@ -10,7 +10,7 @@ document
     const email = (document.querySelector("#email") as HTMLInputElement).value;
     const password = (document.querySelector("#password") as HTMLInputElement)
       .value;
-    const message = document.querySelector("#message") as HTMLInputElement;
+    const message = document.querySelector("#message") as HTMLParagraphElement;
 
     const response = await fetch("http://localhost:3000/register", {
       method: "POST",

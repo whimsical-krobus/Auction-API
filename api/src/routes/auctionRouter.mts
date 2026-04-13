@@ -49,7 +49,7 @@ auctionRouter.post("/", async (req, res) => {
       typeof description === "string" &&
       endTime &&
       typeof startingPrice === "number" &&
-      typeof createdBy === "string" &&
+      typeof createdBy === "string" 
     ) {
       const newAuction = await createAuction(
         imageUrl,

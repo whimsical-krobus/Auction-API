@@ -91,7 +91,7 @@ io.on("connection", async (socket) => {
       const userDto = jwt.decode(loginCookie) as UserDTO;
 
       if (foundAuction.endTime < new Date()) {
-        io.to(auctionId).emit("auctionInfo", foundAuction);
+        io.to(auctionId).emit("auctionInfo", convertAuctionToDto(foundAuction));
         socket.emit("bidError", "Auktionen är avslutad!");
         return;
       }

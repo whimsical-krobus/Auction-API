@@ -97,7 +97,7 @@ io.on("connection", async (socket) => {
       }
      
       if (foundAuction.createdBy === userDto.username) {
-        io.to(auctionId).emit("auctionInfo", foundAuction);
+        io.to(auctionId).emit("auctionInfo", convertAuctionToDto(foundAuction));
         socket.emit("bidError", "Du kan inte bjuda på din egen auktion!");
         return;
       } 
@@ -116,7 +116,7 @@ io.on("connection", async (socket) => {
         return;
       }
 
-    io.to(auctionId).emit("auctionInfo", foundAuction);
+    io.to(auctionId).emit("auctionInfo", convertAuctionToDto(foundAuction));
   });
 });
 

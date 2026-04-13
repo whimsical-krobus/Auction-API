@@ -49,24 +49,16 @@ auctionRouter.get("/:id", async (req, res) => {
 // POST - create auction with item, starting price, end time, and sellers user name
 auctionRouter.post("/", async (req, res) => {
   try {
-    const {
-      imageUrl,
-      title,
-      description,
-      endTime,
-      startingPrice,
-      currentPrice,
-      createdBy,
-    } = req.body;
+    const { imageUrl, title, description, endTime, startingPrice, createdBy } =
+      req.body;
 
     if (
-      imageUrl &&
-      title &&
-      description &&
+      imageUrl === "string" &&
+      title === "string" &&
+      description === "string" &&
       endTime &&
-      startingPrice &&
-      currentPrice &&
-      createdBy
+      startingPrice === "number" &&
+      createdBy === "string"
     ) {
       const newAuction = await createAuction(
         imageUrl,
@@ -74,7 +66,6 @@ auctionRouter.post("/", async (req, res) => {
         description,
         endTime,
         startingPrice,
-        currentPrice,
         createdBy,
       );
       res.status(201).json(newAuction);

@@ -1,4 +1,4 @@
-import AuctionModel from "../models/auctionSchema.mjs";
+import AuctionModel, { convertAuctionToDto } from "../models/auctionSchema.mjs";
 
 export const createAuction = async (
   imageUrl: string,
@@ -21,11 +21,14 @@ export const createAuction = async (
 };
 
 export const getAllAuctions = async () => {
-  return await AuctionModel.find();
+  const auctions = await AuctionModel.find();
+  return auctions.map(convertAuctionToDto);
 };
 
 export const getOneAuction = async (id: string) => {
-  return await AuctionModel.findOne({ id: +id });
+  const auction = await AuctionModel.findById(id);
+  if (!auction) return null;
+  return convertAuctionToDto(auction);
 };
 
 //export const newAuctionBid = async (auctionId: string, newBid: number) => {
@@ -42,5 +45,5 @@ export const getOneAuction = async (id: string) => {
 // };
 
 export const deleteAuction = async (id: string) => {
-  return await AuctionModel.findOneAndDelete({ id: +id });
+  return await AuctionModel.findByIdAndDelete(id);
 };

@@ -5,12 +5,12 @@ document.querySelector("#loginForm")?.addEventListener("submit", async (e) => {
 
     const email = (document.querySelector("#email") as HTMLInputElement).value;
     const password = (document.querySelector("#password") as HTMLInputElement).value;
-    const message = document.querySelector("#message") as HTMLDivElement;
+    const message = document.querySelector("#message") as HTMLParagraphElement;
 
     const response = await fetch("http://localhost:3000/login", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+            "content-type": "application/json",
         },
         credentials: "include",
         body: JSON.stringify({ email, password }),

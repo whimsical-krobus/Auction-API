@@ -16,15 +16,16 @@
     <div id="app">
 
       <h1>Swarovski-auktioner</h1>
-
-      <form id="createAuctionForm">
-        <input type="text" id="title" placeholder="Titel" required/>
-        <input type="text" id="description" placeholder="Beskrivning" required/>
-        <input type="text" id="imageUrl" placeholder="Bildlänk" required/>
-        <input type="number" id="startingPrice" placeholder="Startpris" min="1" step="1" required/>
-        <input type="datetime-local" id="endTime" required/>
-        <button type="submit">Skapa auktion</button>
-      </form>
+      <div id="createAuctionForm">
+        <form action="">
+          <input type="text" id="title" placeholder="Titel" required/>
+          <input type="text" id="description" placeholder="Beskrivning" required/>
+          <input type="text" id="imageUrl" placeholder="Bildlänk" required/>
+          <input type="number" id="startingPrice" placeholder="Startpris" min="1" step="1" required/>
+          <input type="datetime-local" id="endTime" required/>
+          <button type="submit">Skapa auktion</button>
+        </form>
+      </div>
 
       <p id="auctionMessage"></p>
 
@@ -32,10 +33,12 @@
 
       <div id="auctionInfo"></div>
 
-      <form id="bidForm">
-        <input type="number" id="amount" placeholder="Bud" required/>
-        <button type="submit">Lägg bud</button>
-      </form>
+      <div id="bidForm">
+        <form action="">
+          <input type="number" id="amount" placeholder="Bud" required/>
+          <button type="submit">Lägg bud</button>
+        </form>
+      </div>
 
       <p id="bidError"></p>
     </div>

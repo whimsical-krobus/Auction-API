@@ -22,7 +22,7 @@ document.querySelector("#loginForm")?.addEventListener("submit", async (e) => {
         sessionStorage.setItem("me", user.username);
         location.href = "/";
     } else {
-        response.status === 401;
+        response.status === 400;
         message.textContent = "Fel e-post eller lösenord.";
     }
 });

@@ -175,7 +175,7 @@ const showAuction = (auction: Auction) => {
     <img src="${auction.imageUrl}" alt="${auction.title}" width="250" />
     <p>${auction.description}</p>
     <p>Säljare: ${auction.createdBy}</p>
-    <p>Nuvarande bud: ${auction.currentPrice}</p>
+    <p>Nuvarande bud: ${auction.currentPrice} :- </p>
     <p>${new Date(auction.endTime) < new Date() ? "Vinnare" : "Ledande budgivare"}: ${auction.leadingBidder || "Ingen ännu"}</p>
     <p>Slutar: ${new Date(auction.endTime).toLocaleString()}</p>
     <p>Status: ${new Date(auction.endTime) < new Date() ? "Avslutad" : "Pågår"}</p> `;

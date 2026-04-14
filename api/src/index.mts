@@ -56,20 +56,17 @@ const io = new Server(server, {
 });
 
 io.on("connection", async (socket) => {
-  console.log("User connected:", socket.id);
-
+  
   const cookies = cookie.parse(socket.handshake.headers.cookie || "");
-
   const loginCookie = cookies.login;
-  console.log("Login cookie:", loginCookie);
-
+ 
   socket.on("joinAuction", async (auctionId: string) => {
   
     if (!loginCookie) {
       socket.emit("bidError", "Du behöver logga in!");
       return;
     }
-
+    
     socket.join(auctionId);
   
     const foundAuction = await AuctionModel.findById(auctionId);
@@ -123,8 +120,7 @@ io.on("connection", async (socket) => {
 server.listen(port, async () => {
   try {
     await mongoose.connect(mongoUrl);
-    console.log("Connected to MongoDB");
-  } catch (error) {
+     } catch (error) {
     console.error("Database error:", error);
   }
   console.log("Server running on port:", port);

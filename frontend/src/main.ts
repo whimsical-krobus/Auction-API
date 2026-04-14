@@ -1,9 +1,11 @@
 import "./style.css";
 import { io } from "socket.io-client";
 import type { Auction } from "./models/Auction";
+import { API_URL, ONE_HOUR_IN_MS } from "./constants";
 
 
-const socket = io("http://localhost:3000", {
+
+const socket = io(API_URL, {
   withCredentials: true,
 });
 
@@ -25,8 +27,6 @@ const endTimeInput = document.getElementById(
   "endTime",
 ) as HTMLInputElement | null;
 
-const ONE_MINUTE_IN_MS = 60 * 1000;
-const ONE_HOUR_IN_MS = 60 * ONE_MINUTE_IN_MS;
 
 if (endTimeInput) {
   const date = new Date(Date.now() + ONE_HOUR_IN_MS);

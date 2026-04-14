@@ -7,7 +7,7 @@ const userSchema = new Schema({
   password: { type: String, required: true },
 });
 
-const User = model("user", userSchema);
+const UserModel = model("user", userSchema);
 
 type UserDbType = InferSchemaType<typeof userSchema>;
 
@@ -18,4 +18,4 @@ export const convertUserToDto = (dataFromDb: UserDbType): UserDTO => {
   } satisfies UserDTO;
 };
 
-export default User;
+export default UserModel;

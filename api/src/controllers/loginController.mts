@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
 import type { LoginRequest } from "../models/requests/loginRequest.mjs";
-import User, { convertUserToDto } from "../models/userSchema.mjs";
+import UserModel, { convertUserToDto } from "../models/userSchema.mjs";
 
 export const loginUser = async (request: LoginRequest) => {
-  const foundUser = await User.findOne({ email: request.email });
+  const foundUser = await UserModel.findOne({ email: request.email });
 
   if (!foundUser) {
     throw Error("Could not find user with email");

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import type { NextFunction, Request, Response } from "express";
 import type { UserDTO } from "../models/userDto.mjs";
-import User from "../models/userSchema.mjs";
+import UserModel from "../models/userSchema.mjs";
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -15,7 +15,7 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
       if (!user) {
         res.status(401).json({ message: "You are not logged in" });
       } else {
-        const foundUser = await User.findOne({
+        const foundUser = await UserModel.findOne({
           email: (user as UserDTO).email,
         });
 

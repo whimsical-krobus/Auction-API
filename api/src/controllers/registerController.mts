@@ -1,6 +1,6 @@
 import type { RegisterRequest } from "../models/requests/registerRequest.mjs";
 import bcrypt from "bcryptjs";
-import User, { convertUserToDto } from "../models/userSchema.mjs";
+import UserModel, { convertUserToDto } from "../models/userSchema.mjs";
 
 export const createUser = async (request: RegisterRequest) => {
   const salt = await bcrypt.genSalt();
@@ -12,7 +12,7 @@ export const createUser = async (request: RegisterRequest) => {
     password: hashedPassword,
   };
 
-  const theNewUser = await User.create(user);
+  const theNewUser = await UserModel.create(user);
 
   return convertUserToDto(theNewUser);
 };

@@ -1,4 +1,5 @@
 import "./style.css";
+import type { User } from "./models/User";
 
 document.querySelector("#loginForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -17,7 +18,7 @@ document.querySelector("#loginForm")?.addEventListener("submit", async (e) => {
     });
 
     if (response.status === 200) {
-        const user = (await response.json()) as { username: string; email: string; };
+        const user = (await response.json()) as User;
         sessionStorage.setItem("me", user.username);
         location.href = "/";
     } else {

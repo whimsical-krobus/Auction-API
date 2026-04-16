@@ -24,4 +24,3 @@ export const getAllAuctions = async () => {
   const auctions = await AuctionModel.find();
   return auctions.map(convertAuctionToDto);
 };
-

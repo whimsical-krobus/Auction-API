@@ -1,21 +1,10 @@
 import AuctionModel, { convertAuctionToDto } from "../models/auctionSchema.mjs";
+import type { createAuctionRequest } from "../models/requests/createAuctionRequest.mjs";
 
-export const createAuction = async (
-  imageUrl: string,
-  title: string,
-  description: string,
-  endTime: Date,
-  startingPrice: number,
-  createdBy: string,
-) => {
+export const createAuction = async (data: createAuctionRequest) => {
   return await AuctionModel.create({
-    imageUrl,
-    title,
-    description,
-    endTime,
-    startingPrice,
-    currentPrice: startingPrice,
-    createdBy,
+   ...data,
+    currentPrice: data.startingPrice,
     leadingBidder: "",
   });
 };

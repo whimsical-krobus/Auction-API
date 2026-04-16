@@ -3,8 +3,6 @@ import { io } from "socket.io-client";
 import type { Auction } from "./models/Auction";
 import { API_URL, ONE_HOUR_IN_MS } from "./constants";
 
-
-
 const socket = io(API_URL, {
   withCredentials: true,
 });
@@ -23,16 +21,20 @@ if (!me) {
 if (currentUser && me) {
   currentUser.textContent = `Inloggad som: ${me}`;
 }
+
+const setDefaultEndTime = (input: HTMLInputElement) => {
+  const date = new Date(Date.now() + ONE_HOUR_IN_MS);
+  date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+  input.value = date.toISOString().slice(0, 16);
+};
+
 const endTimeInput = document.getElementById(
   "endTime",
 ) as HTMLInputElement | null;
 
 
 if (endTimeInput) {
-  const date = new Date(Date.now() + ONE_HOUR_IN_MS);
-  date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-
-  endTimeInput.value = date.toISOString().slice(0, 16);
+ setDefaultEndTime(endTimeInput);
 }
 
 document
@@ -81,9 +83,8 @@ document
       const endTimeInput = document.getElementById(
         "endTime",
       ) as HTMLInputElement;
-      const date = new Date(Date.now() + ONE_HOUR_IN_MS);
-      date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-      endTimeInput.value = date.toISOString().slice(0, 16);
+
+      setDefaultEndTime(endTimeInput);
 
       await loadAuctions();
     } else if (response.status === 400) {

@@ -35,7 +35,7 @@ export const convertAuctionToDto = (
     startingPrice: dataFromDb.startingPrice,
     currentPrice: dataFromDb.currentPrice,
     createdBy: dataFromDb.createdBy,
-    leadingBidder: dataFromDb.leadingBidder,
+    leadingBidder: dataFromDb.leadingBidder ?? null,
   } satisfies AuctionDTO;
 };
 

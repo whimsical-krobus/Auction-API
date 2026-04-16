@@ -25,8 +25,3 @@ export const getAllAuctions = async () => {
   return auctions.map(convertAuctionToDto);
 };
 
-export const getOneAuction = async (id: string) => {
-  const auction = await AuctionModel.findById(id);
-  if (!auction) return null;
-  return convertAuctionToDto(auction);
-};

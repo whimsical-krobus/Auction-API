@@ -1,4 +1,3 @@
-import "./style.css";
 import type { User } from "./models/User";
 
 document.querySelector("#loginForm")?.addEventListener("submit", async (e) => {

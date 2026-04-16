@@ -1,4 +1,3 @@
-import "./style.css";
 import { io } from "socket.io-client";
 import type { Auction } from "./models/Auction";
 import { API_URL, ONE_HOUR_IN_MS } from "./constants";

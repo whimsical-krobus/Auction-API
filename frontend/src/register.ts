@@ -1,5 +1,3 @@
-import "./style.css";
-
 document
   .querySelector("#registerForm")
   ?.addEventListener("submit", async (e) => {

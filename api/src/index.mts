@@ -125,5 +125,3 @@ server.listen(port, async () => {
   }
   console.log("Server running on port:", port);
 });
-
-console.log("MongoURL:", mongoUrl);

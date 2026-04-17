@@ -3,4 +3,5 @@ export const SOCKET_MESSAGES = {
     AUCTION_ENDED: "Auktionen är avslutad!",
     OWN_AUCTION: "Du kan inte bjuda på din egen auktion!",
     BID_TOO_LOW: "Ditt bud får inte vara lägre än det nuvarande högsta budet!",
-}
+    AUCTION_NOT_FOUND: "Auktionen kunde inte hittas!",
+};

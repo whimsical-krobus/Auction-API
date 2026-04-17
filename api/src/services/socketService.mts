@@ -60,7 +60,7 @@ export function initializeSocket(app: Express) {
         
         if (foundAuction.createdBy === userDto.username) {
             io.to(auctionId).emit("auctionInfo", convertAuctionToDto(foundAuction));
-            socket.emit("bidError", "Du kan inte bjuda på din egen auktion!");
+            socket.emit("bidError", SOCKET_MESSAGES.OWN_AUCTION);
             return;
         } 
 

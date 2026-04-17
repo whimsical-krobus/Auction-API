@@ -7,7 +7,6 @@ import AuctionModel from "../models/auctionSchema.mjs";
 import { convertAuctionToDto } from "../models/auctionSchema.mjs";
 import type { Express } from "express";
 
-
 const allowedOrigins = ["http://localhost:5173"];
 
 export function initializeSocket(app: Express) {

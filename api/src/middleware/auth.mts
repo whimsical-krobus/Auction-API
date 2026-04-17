@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import type { NextFunction, Request, Response } from "express";
 import type { UserDTO } from "../models/userDto.mjs";
 import UserModel from "../models/userSchema.mjs";
+import { extractUserFromToken } from "../utils/jwtUtils.mjs";
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -10,13 +11,13 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     if (!token) {
       res.status(401).json({ message: "You are not logged in" });
     } else {
-      const user = jwt.decode(token);
+      const user = extractUserFromToken(token);
 
       if (!user) {
         res.status(401).json({ message: "You are not logged in" });
       } else {
         const foundUser = await UserModel.findOne({
-          email: (user as UserDTO).email,
+          email: user.email,
         });
 
         if (foundUser) {

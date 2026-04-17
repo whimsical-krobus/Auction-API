@@ -1,4 +1,3 @@
-import jwt from "jsonwebtoken";
 import type { NextFunction, Request, Response } from "express";
 import UserModel from "../models/userSchema.mjs";
 import { extractUserFromToken } from "../utils/jwtUtils.mjs";

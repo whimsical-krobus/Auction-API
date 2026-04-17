@@ -1,7 +1,5 @@
 import { createServer } from "node:http";
 import { Server } from "socket.io";
-import type { UserDTO } from "../models/userDto.mjs";
-import jwt from "jsonwebtoken";
 import cookie from "cookie";
 import AuctionModel from "../models/auctionSchema.mjs";
 import { convertAuctionToDto } from "../models/auctionSchema.mjs";
@@ -53,7 +51,7 @@ export function initializeSocket(app: Express) {
         if (foundAuction && loginCookie) {
         const userDto = extractUserFromToken(loginCookie);
 
-        if (!userDto) { // ← NY CHECK (säkrare!)
+        if (!userDto) {
             socket.emit("bidError", SOCKET_MESSAGES.NOT_LOGGED_IN);
             return;
         }

@@ -65,7 +65,7 @@ export function initializeSocket(app: Express) {
         } 
 
         if (bidAmount <= foundAuction.currentPrice) {
-            socket.emit("bidError", "Din bud får inte vara lägre än det nuvarande högsta budet!");
+            socket.emit("bidError", SOCKET_MESSAGES.BID_TOO_LOW);
             return;
         }
 

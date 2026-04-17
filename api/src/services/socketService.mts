@@ -27,7 +27,7 @@ export function initializeSocket(app: Express) {
     socket.on("joinAuction", async (auctionId: string) => {
     
         if (!loginCookie) {
-        socket.emit("bidError", "Du behöver logga in!");
+        socket.emit("bidError", SOCKET_MESSAGES.NOT_LOGGED_IN);
         return;
         }
         

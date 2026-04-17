@@ -74,7 +74,7 @@ export function initializeSocket(app: Express) {
 
         await foundAuction.save();
         } else {
-            socket.emit("bidError", "Auktionen kunde inte hittas!");
+            socket.emit("bidError", SOCKET_MESSAGES.AUCTION_NOT_FOUND);
             return;
         }
 

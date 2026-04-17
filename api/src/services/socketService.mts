@@ -7,6 +7,7 @@ import AuctionModel from "../models/auctionSchema.mjs";
 import { convertAuctionToDto } from "../models/auctionSchema.mjs";
 import type { Express } from "express";
 import { SOCKET_MESSAGES } from "../constants/messages.mjs";
+import { extractUserFromToken } from "../utils/jwtUtils.mjs";
 
 const allowedOrigins = ["http://localhost:5173"];
 
@@ -50,7 +51,12 @@ export function initializeSocket(app: Express) {
         const foundAuction = await AuctionModel.findById(auctionId);
 
         if (foundAuction && loginCookie) {
-        const userDto = jwt.decode(loginCookie) as UserDTO;
+        const userDto = extractUserFromToken(loginCookie);
+
+        if (!userDto) { // ← NY CHECK (säkrare!)
+            socket.emit("bidError", SOCKET_MESSAGES.NOT_LOGGED_IN);
+            return;
+        }
 
         if (foundAuction.endTime < new Date()) {
             io.to(auctionId).emit("auctionInfo", convertAuctionToDto(foundAuction));

@@ -3,10 +3,7 @@ import {
   getAllAuctions,
   createAuction,
 } from "../controllers/auctionController.mjs";
-import jwt from "jsonwebtoken";
-import type { UserDTO } from "../models/userDto.mjs";
 import { validateAuctionRequest } from "../utils/validators.mjs";
-import e from "express";
 import { extractUserFromToken } from "../utils/jwtUtils.mjs";
 
 export const auctionRouter = express.Router();

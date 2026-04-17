@@ -54,7 +54,7 @@ export function initializeSocket(app: Express) {
 
         if (foundAuction.endTime < new Date()) {
             io.to(auctionId).emit("auctionInfo", convertAuctionToDto(foundAuction));
-            socket.emit("bidError", "Auktionen är avslutad!");
+            socket.emit("bidError", SOCKET_MESSAGES.AUCTION_ENDED);
             return;
         }
         

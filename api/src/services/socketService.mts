@@ -6,6 +6,7 @@ import cookie from "cookie";
 import AuctionModel from "../models/auctionSchema.mjs";
 import { convertAuctionToDto } from "../models/auctionSchema.mjs";
 import type { Express } from "express";
+import { SOCKET_MESSAGES } from "../constants/messages.mjs";
 
 const allowedOrigins = ["http://localhost:5173"];
 
@@ -42,7 +43,7 @@ export function initializeSocket(app: Express) {
 
     socket.on("placeBid", async (bidAmount: number, auctionId: string) => {
         if (!loginCookie) {
-        socket.emit("bidError", "Du behöver logga in!");
+        socket.emit("bidError", SOCKET_MESSAGES.NOT_LOGGED_IN);
         return;
         }
 

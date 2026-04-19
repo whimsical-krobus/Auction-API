@@ -19,3 +19,15 @@ export async function createAuction(formData: {
     
     return response;
 }
+
+export async function fetchAuctions(): Promise<Auction[]> {
+    const response = await fetch(`${API_URL}/auctions`, {
+        credentials: "include",
+    });
+
+    if (response.status === 200) {;
+        return await response.json();
+    } 
+
+    return [];
+}

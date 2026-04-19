@@ -1,4 +1,5 @@
 import type { Auction } from "../models/types";
+import { socket } from "../services/socket";
 import { elements } from "./dom";
 
 export function showAuction(auction: Auction) {
@@ -18,4 +19,21 @@ export function showAuction(auction: Auction) {
         <p>Slutar: ${new Date(auction.endTime).toLocaleString()}</p>
         <p>Status: ${statusLabel}</p>
     `;  
+}
+
+export function renderAuctionList(auctions: Auction[]) {
+    if (!elements.auctionList) return;
+
+    elements.auctionList.innerHTML = "";
+
+    auctions.forEach((auction) => {
+        const button = document.createElement("button");
+        button.textContent = auction.title;
+
+        button.addEventListener("click", () => {
+            socket.emit("joinAuction", auction.id);
+        });
+        
+        elements.auctionList!.appendChild(button);
+    });
 }

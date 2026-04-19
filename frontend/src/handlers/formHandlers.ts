@@ -26,3 +26,35 @@ export async function handleCreateAuction(e: Event) {
         showMessage("Något gick fel när auktionen skulle skapas.", "error");
     }
 }
+
+export function handlePlaceBid(e: Event) {
+    e.preventDefault();
+
+    const amount = +elements.amountInput.value;
+
+    if (!selectedAuction) {
+        showBidError("Välj en auktion först");
+        return;
+    }
+
+    if (amount <= 0) {
+        showBidError("Budet måste vara högre än 0");
+        return;
+    }
+
+    placeBid(amount, selectedAuction);
+}
+
+export let selectedAuction: "";
+
+export function setSelectedAuction(id: string) {
+    selectedAuction = id;
+    joinAuction(id);
+}
+
+function resetAuctionForm() {
+    elements.titleInput.value = "";
+    elements.descriptionInput.value = "";
+    elements.imageUrlInput.value = "";
+    elements.startingPriceInput.value = "";
+}

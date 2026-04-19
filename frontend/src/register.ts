@@ -1,13 +1,9 @@
-document
-  .querySelector("#registerForm")
-  ?.addEventListener("submit", async (e) => {
+document.querySelector("#registerForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const username = (document.querySelector("#username") as HTMLInputElement)
-      .value;
+    const username = (document.querySelector("#username") as HTMLInputElement).value;
     const email = (document.querySelector("#email") as HTMLInputElement).value;
-    const password = (document.querySelector("#password") as HTMLInputElement)
-      .value;
+    const password = (document.querySelector("#password") as HTMLInputElement).value;
     const message = document.querySelector("#message") as HTMLParagraphElement;
 
     const response = await fetch("http://localhost:3000/register", {

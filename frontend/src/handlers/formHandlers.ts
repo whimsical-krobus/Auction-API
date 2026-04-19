@@ -21,7 +21,7 @@ export function setDefaultEndTime() {
 export async function handleCreateAuction(e: Event) {
     e.preventDefault();
 
-    const fromData = {
+    const formData = {
         title: elements.titleInput.value,
         description: elements.descriptionInput.value,
         imageUrl: elements.imageUrlInput.value,
@@ -29,7 +29,7 @@ export async function handleCreateAuction(e: Event) {
         endTime: elements.endTimeInput?.value || "",
     };
 
-    const response = await createAuction(fromData);
+    const response = await createAuction(formData);
 
     if (response.status === 201) {
         showMessage("Auktionen skapades!", "success");

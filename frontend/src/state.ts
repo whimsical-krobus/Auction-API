@@ -1,6 +1,6 @@
 import { joinAuction } from "./services/socket";
 
-export let selectedAuction = "";
+let selectedAuction = "";
 
 export function getSelectedAuction(): string {
     return selectedAuction;

@@ -5,7 +5,6 @@ import { placeBid } from "../services/socket";
 import { renderAuctionList } from "../ui/auctionUI";
 import { ONE_HOUR_IN_MS } from "../constants";
 import { getSelectedAuction } from "../state";
-import { joinAuction } from "../services/socket";
 
 export async function loadAuctions() {
     const auctions = await fetchAuctions();

@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import type { Auction } from "./models/Auction";
+import type { Auction } from "./models/types";
 import { API_URL, ONE_HOUR_IN_MS } from "./constants";
 
 const socket = io(API_URL, {
@@ -45,7 +45,7 @@ document.getElementById("createAuctionForm")?.addEventListener("submit", async (
     const startingPrice = +(document.getElementById("startingPrice") as HTMLInputElement).value;
     const endTime = (document.getElementById("endTime") as HTMLInputElement).value;
 
-    const response = await fetch("http://localhost:3000/auctions", {
+    const response = await fetch(`${API_URL}/auctions`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -127,7 +127,7 @@ socket.on("connect", () => {
 });
 
 const loadAuctions = async () => {
-  const response = await fetch("http://localhost:3000/auctions", {
+  const response = await fetch(`${API_URL}/auctions`, {
     credentials: "include",
   });
 

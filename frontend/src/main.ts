@@ -36,9 +36,7 @@ if (endTimeInput) {
  setDefaultEndTime(endTimeInput);
 }
 
-document
-  .getElementById("createAuctionForm")
-  ?.addEventListener("submit", async (e) => {
+document.getElementById("createAuctionForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const title = (document.getElementById("title") as HTMLInputElement).value;

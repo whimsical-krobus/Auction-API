@@ -1,3 +1,15 @@
 export const elements = {
-
+    auctionMessage: document.getElementById("auctionMessage"),
+    currentUser: document.getElementById("currentUser"),
+    endTimeInput: document.getElementById("endTime") as HTMLInputElement | null,
+    createAuctionForm: document.getElementById("createAuctionForm"),
+    titleInput: document.getElementById("title") as HTMLInputElement,
+    descriptionInput: document.getElementById("description") as HTMLInputElement,
+    imageUrlInput: document.getElementById("imageUrl") as HTMLInputElement,
+    startingPriceInput: document.getElementById("startingPrice") as HTMLInputElement,
+    bidForm: document.getElementById("bidForm"),
+    amountInput: document.getElementById("amount") as HTMLInputElement,
+    bidError: document.getElementById("bidError"),
+    auctionList: document.getElementById("auctionList"),
+    auctionInfo: document.getElementById("auctionInfo"),
 };

@@ -1,9 +1,11 @@
 import { createAuction, fetchAuctions } from "../services/api";
 import { elements } from "../ui/dom";
 import { showMessage, showBidError } from "../ui/messageUI";
-import { placeBid, joinAuction } from "../services/socket";
+import { placeBid } from "../services/socket";
 import { renderAuctionList } from "../ui/auctionUI";
 import { ONE_HOUR_IN_MS } from "../constants";
+import { getSelectedAuction } from "../state";
+import { joinAuction } from "../services/socket";
 
 export async function loadAuctions() {
     const auctions = await fetchAuctions();
@@ -46,8 +48,9 @@ export function handlePlaceBid(e: Event) {
     e.preventDefault();
 
     const amount = +elements.amountInput.value;
+    const selecctedAuction = getSelectedAuction();
 
-    if (!selectedAuction) {
+    if (!selecctedAuction) {
         showBidError("Välj en auktion först");
         return;
     }
@@ -57,14 +60,7 @@ export function handlePlaceBid(e: Event) {
         return;
     }
 
-    placeBid(amount, selectedAuction);
-}
-
-export let selectedAuction = "";
-
-export function setSelectedAuction(id: string) {
-    selectedAuction = id;
-    joinAuction(id);
+    placeBid(amount, selecctedAuction);
 }
 
 function resetAuctionForm() {

@@ -1,6 +1,6 @@
 import type { Auction } from "../models/types";
 import { elements } from "./dom";
-import { setSelectedAuction } from "../handlers/formHandlers";
+import { setSelectedAuction } from "../state";
 
 export function showAuction(auction: Auction) {
     if (!elements.auctionInfo) return;

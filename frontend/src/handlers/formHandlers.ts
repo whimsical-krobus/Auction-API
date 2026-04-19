@@ -2,6 +2,21 @@ import { createAuction, fetchAuctions } from "../services/api";
 import { elements } from "../ui/dom";
 import { showMessage, showBidError } from "../ui/messageUI";
 import { socket, placeBid, joinAuction } from "../services/socket";
+import { renderAuctionList } from "../ui/auctionUI";
+import { ONE_HOUR_IN_MS } from "../constants";
+
+export async function loadAuctions() {
+    const auctions = await fetchAuctions();
+    renderAuctionList(auctions);
+}
+
+export function setDefaultEndTime() {
+    if (!elements.endTimeInput) return;
+
+    const date = new Date(Date.now() + ONE_HOUR_IN_MS);
+    date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+    elements.endTimeInput.value = date.toISOString().slice(0, 16);
+}
 
 export async function handleCreateAuction(e: Event) {
     e.preventDefault();
@@ -45,7 +60,7 @@ export function handlePlaceBid(e: Event) {
     placeBid(amount, selectedAuction);
 }
 
-export let selectedAuction: "";
+export let selectedAuction = "";
 
 export function setSelectedAuction(id: string) {
     selectedAuction = id;
@@ -57,4 +72,5 @@ function resetAuctionForm() {
     elements.descriptionInput.value = "";
     elements.imageUrlInput.value = "";
     elements.startingPriceInput.value = "";
+    setDefaultEndTime();
 }

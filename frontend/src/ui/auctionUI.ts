@@ -1,6 +1,6 @@
 import type { Auction } from "../models/types";
-import { socket } from "../services/socket";
 import { elements } from "./dom";
+import { setSelectedAuction } from "../handlers/formHandlers";
 
 export function showAuction(auction: Auction) {
     if (!elements.auctionInfo) return;
@@ -31,7 +31,7 @@ export function renderAuctionList(auctions: Auction[]) {
         button.textContent = auction.title;
 
         button.addEventListener("click", () => {
-            socket.emit("joinAuction", auction.id);
+            setSelectedAuction(auction.id);
         });
         
         elements.auctionList!.appendChild(button);

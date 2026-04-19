@@ -1,7 +1,7 @@
 import { createAuction, fetchAuctions } from "../services/api";
 import { elements } from "../ui/dom";
 import { showMessage, showBidError } from "../ui/messageUI";
-import { socket, placeBid, joinAuction } from "../services/socket";
+import { placeBid, joinAuction } from "../services/socket";
 import { renderAuctionList } from "../ui/auctionUI";
 import { ONE_HOUR_IN_MS } from "../constants";
 

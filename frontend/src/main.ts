@@ -40,16 +40,10 @@ document.getElementById("createAuctionForm")?.addEventListener("submit", async (
     e.preventDefault();
 
     const title = (document.getElementById("title") as HTMLInputElement).value;
-    const description = (
-      document.getElementById("description") as HTMLInputElement
-    ).value;
-    const imageUrl = (document.getElementById("imageUrl") as HTMLInputElement)
-      .value;
-    const startingPrice = +(
-      document.getElementById("startingPrice") as HTMLInputElement
-    ).value;
-    const endTime = (document.getElementById("endTime") as HTMLInputElement)
-      .value;
+    const description = (document.getElementById("description") as HTMLInputElement).value;
+    const imageUrl = (document.getElementById("imageUrl") as HTMLInputElement).value;
+    const startingPrice = +(document.getElementById("startingPrice") as HTMLInputElement).value;
+    const endTime = (document.getElementById("endTime") as HTMLInputElement).value;
 
     const response = await fetch("http://localhost:3000/auctions", {
       method: "POST",

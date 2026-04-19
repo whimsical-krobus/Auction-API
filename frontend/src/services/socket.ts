@@ -10,3 +10,6 @@ export function placeBid(amount: number, auctionId: string) {
     socket.emit("placeBid", amount, auctionId);
 }
 
+export function joinAuction(auctionId: string) {
+    socket.emit("joinAuction", auctionId);
+}

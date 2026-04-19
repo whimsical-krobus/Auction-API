@@ -6,3 +6,7 @@ export const socket = io(API_URL, {
     withCredentials: true,
 });
 
+export function placeBid(amount: number, auctionId: string) {
+    socket.emit("placeBid", amount, auctionId);
+}
+

@@ -308,8 +308,9 @@ npm run dev    # Start development server (usually runs on http://localhost:5173
 ---
 
 #### Authors
-([Linda] (https://github.com/whimsical-krobus))
+[Linda](https://github.com/whimsical-krobus)
 
 
 **License**
+
 ISC
